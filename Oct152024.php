@@ -110,4 +110,76 @@
     echo "<p> $a <=> $b => ";
     echo $a <=> $b;
     "</p>";
+
+    // PHP Increment / Decrement Operators
+    $x = 10;
+    $y = 3;
+
+    // $sum = ++$x + $y;// pre-inc
+    $sum = $x++ + $y;// post-inc
+    echo "<p>sum($x,$y) $sum</p>";
+
+    // PHP Logical Operators
+    echo "<p> true and true => ";
+    var_dump(true && true);
+    echo "</p>";
+
+    echo "<p> true and false => ";
+    var_dump(true && false);
+    echo "</p>";
+
+    echo "<p> false and true => ";
+    var_dump(false && true);
+    echo "</p>";
+
+    echo "<p> false and false => ";
+    var_dump(false && false);
+    echo "</p>";
+
+    echo "<p> true or true => ";
+    var_dump(true || true);
+    echo "</p>";
+
+    echo "<p> true or false => ";
+    var_dump(true || false);
+    echo "</p>";
+
+    echo "<p> false or true => ";
+    var_dump(false || true);
+    echo "</p>";
+
+    echo "<p> false or false => ";
+    var_dump(false || false);
+    echo "</p>";
+
+    // PHP String Operators
+
+    $first_name = "Aptech";
+    $last_name = "Learning";
+
+    $full_name = $first_name . " " . $last_name;
+    $name = "Mr./Mrs/Ms ";
+
+    $name .= $full_name;
+    echo "<p>$full_name</p>";
+    echo "<p>$name</p>";
+
+    // PHP Conditional Assignment Operators
+    // Ternary
+
+    $age = 21;
+
+    $result = $age >= 18 ? "You can Drive" : "come after " . 18 - $age . "years";
+
+    echo "<p>$result</p>";
+    // Null coalescing
+
+    // $data = null;
+    $data = 12;
+
+    $value = $data ?? "No Data";
+
+    echo "<p>$value</p>";
+
+
 ?>
