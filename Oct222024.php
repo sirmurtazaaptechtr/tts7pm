@@ -55,6 +55,8 @@ if($username == 'aliraza' && $password == '123456') {
         echo "<h1>Welcome Admin</h1>";
     } elseif($role == 'user') {
         echo "<h1>Welcome User</h1>";
+    }else {
+        echo "<h1>Invalid Role!</h1>";
     }
 } else {
     // Invalid credentials message
