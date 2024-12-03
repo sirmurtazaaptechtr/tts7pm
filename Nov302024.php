@@ -1,5 +1,5 @@
 <?php
-$name = "MyCookie";
+$name = "TheCookie";
 $value = '{
         "breakfast_menu": {
         "food": [
