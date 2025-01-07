@@ -1,8 +1,8 @@
 <?php
     require('connection.inc.php');
     
-    $fullNameErr = $genderErr = '';
-    $fullName = $email = $dob = $phone = $gender = '';
+    $fullNameErr= $emailErr  = $passwordErr = $rPasswordErr =  $genderErr = '';
+    $fullName = $email = $password = $rPassword = $dob = $phone = $gender = '';
     $message = '';
 
     if(isset($_POST['saveBtn']) && $_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -14,7 +14,32 @@
             $fullName = test_input($_POST['fullName']);
         }
         
-        $email = test_input($_POST['email']);
+        if(empty($_POST['email'])) {
+            $emailErr = "Email is required!";
+        }else {
+            $email = test_input($_POST['email']);
+            $email_sql = "SELECT * FROM `students` WHERE email = '$email'";
+            $result = mysqli_query($conn,$email_sql);
+
+            if(mysqli_num_rows($result)>0) {
+                $emailErr = "Email already exists!";
+            }
+        }
+
+        if(empty($_POST['password'])) {
+            $passwordErr = "Password is Required!";
+        }else {
+            $password = test_input($_POST['password']);
+        }
+
+        if(empty($_POST['rPassword'])) {
+            $rPasswordErr = "Re-Type Password";
+        }else {
+            $rPassword = test_input($_POST['rPassword']);
+            if($password != $rPassword) {
+                $rPasswordErr = "Password Missmatch!";
+            }
+        }
         $dob = test_input($_POST['dob']);
         $phone = test_input($_POST['phone']);
 
@@ -24,13 +49,17 @@
             $gender = test_input($_POST['gender']);
         }
 
-        if(empty($fullNameErr) && empty($genderErr)) {
+        if(empty($fullNameErr) && empty($genderErr) && empty($passwordErr) && empty($rPasswordErr) && empty($emailErr)) {
             $insert_student_sql = "INSERT INTO `students` (name,email,dob,phone,gender) VALUES ('$fullName','$email','$dob','$phone','$gender')";
             if($is_inserted = mysqli_query($conn,$insert_student_sql)) {
-                $message = "Student Inserted Successfully!";
-                $fullName = $email = $dob = $phone = $gender = '';
-                header("Location:students.php?message=" . urlencode($message));
-                exit();                
+                $lastID = mysqli_insert_id($conn);
+                $insert_login_sql = "INSERT INTO `logins` (user_id,role_id,password) VALUES ('$lastID',2,'$password')";
+                if($is_inserted = mysqli_query($conn,$insert_login_sql)) {
+                    $message = "Student (username:$email,password:$password) Inserted Successfully!";
+                    $fullName = $email = $dob = $phone = $gender = '';
+                    header("Location:students.php?message=" . urlencode($message));
+                    exit();
+                }
             }
         }
 
@@ -51,7 +80,7 @@
         <h1>Student Registration Form</h1>        
         <p class="text-danger">* Required</p>
         <div class="row">
-            <div class="col-6">
+            <div class="col-8">
                 <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>" method="post">
                     <div class="mb-3 row">
                         <label for="fullName" class="col-sm-2 col-form-label">Full Name</label>
@@ -64,8 +93,29 @@
                     </div>
                     <div class="mb-3 row">
                         <label for="email" class="col-sm-2 col-form-label">Email</label>
-                        <div class="col-sm-10">
+                        <div class="col-sm-8">
                             <input type="email" class="form-control" id="email" name="email" placeholder="email@example.com" value="<?php echo $email;?>">
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="text-danger">* <?php echo $emailErr;?></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="password" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="password" name="password" value="<?php echo $password;?>">
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="text-danger">* <?php echo $passwordErr;?></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="rPassword" class="col-sm-2 col-form-label">Re-Enter Password</label>
+                        <div class="col-sm-8">
+                            <input type="password" class="form-control" id="rPassword" name="rPassword" value="<?php echo $rPassword;?>">
+                        </div>
+                        <div class="col-sm-2">
+                            <span class="text-danger">* <?php echo $rPasswordErr;?></span>
                         </div>
                     </div>
                     <div class="mb-3 row">
@@ -94,8 +144,10 @@
                             <span class="text-danger">* <?php echo $genderErr;?></span>
                         </div>
                     </div>
-                    <div class="mb-3 row">
-                        <button type="submit" class="btn btn-primary" name="saveBtn">Save</button>
+                    <div class="mb-3">
+                        <input type="reset" class="btn btn-primary" name="clearBtn" value="Clear">
+                        <button type="submit" class="btn btn-success" name="saveBtn">Save</button>
+
                     </div>
                 </form>
             </div>

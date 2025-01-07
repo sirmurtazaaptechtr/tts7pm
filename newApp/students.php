@@ -4,7 +4,7 @@
     if($_SERVER['REQUEST_METHOD'] == 'GET' && isset($_GET['message'])) {
         $message = test_input($_GET['message']);
     }
-    $students_sql = "SELECT * FROM `students`";
+    $students_sql = "SELECT *,students.id AS student_id  FROM `students`JOIN `logins` ON students.id = logins.user_id";
     $result = mysqli_query($conn,$students_sql);    
 ?>
 <!DOCTYPE html>
@@ -33,6 +33,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
+                    <th scope="col">Password</th>
                     <th scope="col">Date of Birth</th>
                     <th scope="col">Phone</th>
                     <th scope="col">Gender</th>
@@ -42,9 +43,10 @@
                 <?php $srno = 1; while($row = mysqli_fetch_assoc($result)) {?>
                 <tr>
                     <th scope="row"><?php echo $srno;?></th>
-                    <td><?php echo $row['id'];?></td>
+                    <td><?php echo $row['student_id'];?></td>
                     <td><?php echo $row['name'];?></td>
                     <td><?php echo $row['email'];?></td>
+                    <td><?php echo $row['password'];?></td>
                     <td><?php echo $row['dob'];?></td>
                     <td><?php echo $row['phone'];?></td>
                     <td><?php echo $row['gender'];?></td>
