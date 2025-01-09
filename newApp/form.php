@@ -55,9 +55,9 @@
                 $lastID = mysqli_insert_id($conn);
                 $insert_login_sql = "INSERT INTO `logins` (user_id,role_id,password) VALUES ('$lastID',2,'$password')";
                 if($is_inserted = mysqli_query($conn,$insert_login_sql)) {
-                    $message = "Student (username:$email,password:$password) Inserted Successfully!";
+                    $message = "Student (username:$email,password:$password) Created Successfully!";
                     $fullName = $email = $dob = $phone = $gender = '';
-                    header("Location:students.php?message=" . urlencode($message));
+                    header("Location:login.php?message=" . urlencode($message));
                     exit();
                 }
             }

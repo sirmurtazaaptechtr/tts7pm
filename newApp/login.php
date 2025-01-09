@@ -1,5 +1,50 @@
 <?php
 require('connection.inc.php');
+$emailErr = $passwordErr = '';
+$email = $password = $user_id = $db_password = '';
+if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signInBtn'])) {
+    // pr($_POST);
+
+    if(empty($_POST['email'])) {
+        $emailErr = "Email is required!";
+    }else {
+        $email = test_input($_POST['email']);
+    }
+
+    if(empty($_POST['password'])) {
+        $passwordErr = "Password is required!";
+    }else {
+        $password = test_input($_POST['password']);    
+    }
+
+    if(empty($emailErr) && empty($passwordErr)) {
+        $students_sql = "SELECT * FROM `students` WHERE email = '$email'";
+        $result = mysqli_query($conn,$students_sql);
+        if(mysqli_num_rows($result) > 0) {
+            $row = mysqli_fetch_assoc($result);
+            // pr($row);
+            $user_id = $row['id'];
+            $login_sql = "SELECT * FROM `logins` WHERE user_id = '$user_id'";
+            $result = mysqli_query($conn,$login_sql);
+            if(mysqli_num_rows($result) > 0) {
+                $row = mysqli_fetch_assoc($result);
+                // pr($row);
+                $db_password = $row['password'];
+                if($password == $db_password) {
+                    $message = "$email Login Successfull!";                    
+                    header("Location:students.php?message=" . urlencode($message));
+                    exit();                    
+                }else {
+                    $passwordErr = "Incorrect Password!";
+                }
+            }else {
+                $passwordErr = "Access Denied!";
+            }
+        }else {
+            $emailErr = "Incorrect Email!";
+        }
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" data-bs-theme="dark">
@@ -16,22 +61,24 @@ require('connection.inc.php');
         <h1 class="text-center display-1 mb-5">Login - My App</h1>
         <div class="row">
             <div class="col-4 mx-auto">
-                <form>
+                <form action="<?php htmlspecialchars($_SERVER['PHP_SELF']);?>" method="post">
                     <!-- Email input -->
                     <div class="form-outline mb-4">
-                        <input type="email" id="form2Example1" class="form-control" />
-                        <label class="form-label" for="form2Example1">Email address</label>
+                        <input type="email" id="email" name="email" class="form-control" value="<?php echo $email;?>" />
+                        <label class="form-label" for="email">Email address</label>
+                        <span class="text-danger"><?php echo $emailErr;?></span>
                     </div>
 
                     <!-- Password input -->
                     <div class="form-outline mb-4">
-                        <input type="password" id="form2Example2" class="form-control" />
-                        <label class="form-label" for="form2Example2">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" value="<?php echo $password;?>" />
+                        <label class="form-label" for="password">Password</label>
+                        <span class="text-danger"><?php echo $passwordErr;?></span>
                     </div>                  
 
                     <div class="row mb-4 px-3">                        
                         <!-- Submit button -->
-                        <button type="button" class="btn btn-primary btn-block mb-4">Sign in</button>
+                        <input type="submit" class="btn btn-primary btn-block mb-4" name="signInBtn" value="Sign in" />
                     </div>
 
                     <!-- Register buttons -->
