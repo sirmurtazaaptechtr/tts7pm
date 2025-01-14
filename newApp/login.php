@@ -31,7 +31,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signInBtn'])) {
                 // pr($row);
                 $db_password = $row['password'];
                 if($password == $db_password) {
-                    $message = "$email Login Successfull!";                    
+                    $message = "$email Login Successfull!";
+                    $_SESSION['user_login'] = true;
                     header("Location:students.php?message=" . urlencode($message));
                     exit();                    
                 }else {
@@ -83,7 +84,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signInBtn'])) {
 
                     <!-- Register buttons -->
                     <div class="text-center">
-                        <p>Not a member? <a href="form.php">Register</a></p>
+                        <p>Not a member? <a href="addstudent.php">Register</a></p>
                     </div>
                 </form>
             </div>

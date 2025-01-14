@@ -1,4 +1,6 @@
 <?php
+ob_start();
+session_start();
 include('function.inc.php');
 $hostname = "127.0.0.1";
 $username = "root";
