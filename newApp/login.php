@@ -33,6 +33,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signInBtn'])) {
                 if($password == $db_password) {
                     $message = "$email Login Successfull!";
                     $_SESSION['user_login'] = true;
+                    $_SESSION['role_id'] = $row['role_id'];
                     header("Location:students.php?message=" . urlencode($message));
                     exit();                    
                 }else {

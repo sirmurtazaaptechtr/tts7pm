@@ -91,7 +91,14 @@ if(!$_SESSION['user_login']) {
                                  height="22" alt="User Avatar" loading="lazy">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li>
+                                <?php if($_SESSION['role_id'] == 1) {?>
+                                    <a class="dropdown-item" href="#">Admin</a>
+                                    <?php }elseif($_SESSION['role_id'] == 2) {?>
+                                        <a class="dropdown-item" href="#">Student</a>
+                                <?php }?>
+                                
+                            </li>
                             <li><a class="dropdown-item" href="#">Another action</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="logout.php">LogOut</a></li>
