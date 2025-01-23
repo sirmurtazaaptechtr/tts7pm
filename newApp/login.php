@@ -35,7 +35,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signInBtn'])) {
                     $_SESSION['user_login'] = true;
                     $_SESSION['role_id'] = $row['role_id'];
                     header("Location:students.php?message=" . urlencode($message));
-                    exit();                    
+                    exit();
                 }else {
                     $passwordErr = "Incorrect Password!";
                 }
