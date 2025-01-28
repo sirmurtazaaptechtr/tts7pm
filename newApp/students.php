@@ -55,6 +55,7 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
+                    <th scope="col">Photo</th>
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Email</th>
@@ -70,6 +71,7 @@
                 <?php $srno = 1; while($row = mysqli_fetch_assoc($result)) { ?>
                 <tr>
                     <th scope="row"><?php echo $srno; ?></th>
+                    <td><img class="rounded-circle" src="<?php echo $row['profile_image']; ?>" alt="<?php echo $row['name']; ?>" style="height: 75px;"></td>
                     <td><?php echo $row['student_id']; ?></td>
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['email']; ?></td>
