@@ -1,4 +1,5 @@
-<?php    
+<?php
+    $title = "All Students";    
     // Include a common header file, which may contain database connection and other shared resources
     include('header.inc.php');
     
@@ -82,7 +83,7 @@
                     <td>
                         <!-- Buttons for view, edit, and delete actions -->
                         <div class="btn-group" role="group" aria-label="Basic mixed styles example">
-                            <a href="#" type="button" class="btn btn-info">View</a>
+                            <a href="<?php  echo 'viewstudent.php?id=' . $row['student_id']; ?>" type="button" class="btn btn-info">View</a>
                             <a href="<?php  echo 'editstudent.php?id=' . $row['student_id']; ?>" type="button" class="btn btn-warning">Edit</a>
                             <!-- Generate a delete link with the current script and student ID -->
                             <a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) . '?id=' . $row['student_id']; ?>" type="button" class="btn btn-danger">Delete</a>

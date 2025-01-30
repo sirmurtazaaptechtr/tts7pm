@@ -1,6 +1,5 @@
 <?php
-    $title = "Add New Student";
-    require('header.inc.php');
+    require('connection.inc.php');
     
     $fullNameErr = $emailErr  = $passwordErr = $rPasswordErr =  $genderErr = '';
     $uploadErr = [];
@@ -107,7 +106,7 @@
                 if($is_inserted = mysqli_query($conn,$insert_login_sql)) {
                     $message = "Student (username:$email,password:$password) Created Successfully!";
                     $fullName = $email = $dob = $phone = $gender = '';
-                    header("Location:students.php?message=" . urlencode($message));
+                    header("Location:login.php?message=" . urlencode($message));
                     exit();
                 }
             }
@@ -115,10 +114,19 @@
 
     }
 ?>
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
 
-    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<body>
     <div class="container">
-        <h1>Add New Student</h1>        
+        <h1>Student Registration Form</h1>        
         <p class="text-danger">* Required</p>
         <div class="row">
             <div class="col-8">

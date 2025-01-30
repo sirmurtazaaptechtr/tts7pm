@@ -22,7 +22,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signInBtn'])) {
         $result = mysqli_query($conn,$students_sql);
         if(mysqli_num_rows($result) > 0) {
             $row = mysqli_fetch_assoc($result);
-            // pr($row);
+            $_SESSION['name'] = $row['name'];
+            $_SESSION['email'] = $row['email'];
+            $_SESSION['dob'] = $row['dob'];
+            $_SESSION['phone'] = $row['phone'];
+            $_SESSION['gender'] = $row['gender'];
+            $_SESSION['profile_image'] = $row['profile_image'];
+            pr($row);
             $user_id = $row['id'];
             $login_sql = "SELECT * FROM `logins` WHERE user_id = '$user_id'";
             $result = mysqli_query($conn,$login_sql);
@@ -85,7 +91,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['signInBtn'])) {
 
                     <!-- Register buttons -->
                     <div class="text-center">
-                        <p>Not a member? <a href="addstudent.php">Register</a></p>
+                        <p>Not a member? <a href="register.php">Register</a></p>
                     </div>
                 </form>
             </div>

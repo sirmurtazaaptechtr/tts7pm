@@ -11,7 +11,7 @@ if(!$_SESSION['user_login']) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Students</title>
+    <title><?php echo $title;?></title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" 
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -87,10 +87,13 @@ if(!$_SESSION['user_login']) {
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown1" role="button" 
                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="https://mdbootstrap.com/img/Photos/Avatars/img (31).jpg" class="rounded-circle" 
+                            <img src="<?php echo $_SESSION['profile_image']?>" class="rounded-circle" 
                                  height="22" alt="User Avatar" loading="lazy">
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown1">
+                            <li>
+                                <?php echo $_SESSION['name']?>
+                            </li>
                             <li>
                                 <?php if($_SESSION['role_id'] == 1) {?>
                                     <a class="dropdown-item" href="#">Admin</a>
